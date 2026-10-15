@@ -1,0 +1,38 @@
+package com.kloudspot.helpdesk.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document("users")
+public class AppUser {
+    @Id private String id;
+    private String tenantId;
+    private String organizationName;
+    private String name;
+    @Indexed(unique = true) private String email;
+    @JsonIgnore private String passwordHash;
+    private Role role;
+
+    public AppUser() {}
+    public AppUser(String tenantId, String organizationName, String name, String email, String passwordHash, Role role) {
+        this.tenantId = tenantId; this.organizationName = organizationName; this.name = name;
+        this.email = email.toLowerCase(); this.passwordHash = passwordHash; this.role = role;
+    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+    public String getTenantId() { return tenantId; }
+    public void setTenantId(String tenantId) { this.tenantId = tenantId; }
+    public String getOrganizationName() { return organizationName; }
+    public void setOrganizationName(String organizationName) { this.organizationName = organizationName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
+}
+

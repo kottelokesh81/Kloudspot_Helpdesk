@@ -1,0 +1,22 @@
+package com.kloudspot.helpdesk.controller;
+
+import com.kloudspot.helpdesk.domain.AppUser;
+import com.kloudspot.helpdesk.dto.*;
+import com.kloudspot.helpdesk.service.AuthService;
+import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+    private final AuthService authService;
+    public AuthController(AuthService authService) { this.authService = authService; }
+
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) { return authService.login(request); }
+
+    @GetMapping("/me")
+    public UserView me(@AuthenticationPrincipal AppUser user) { return UserView.from(user); }
+}
+
